@@ -2,19 +2,20 @@ version: "3"
 
 services:
   db:
-    image: mariadb:10.8
+    build:
+      context: .
+      dockerfile: database/Dockerfile
     ports:
       - "5000:5000"
     environment:
       MYSQL_DATABASE: mydb
       MYSQL_USER: myuser
       MYSQL_PASSWORD: mypassword
-      MYSQL_ROOT_PASSWORD: rootbigpp
+      MYSQL_ROOT_PASSWORD: myrootpassword
 
       TZ: Europe/Paris
     volumes:
       - "mysql-data:/var/lib/mysql"
-      - ./database:/docker-entrypoint-initdb.d
 
   web:
     build: ./webserver
