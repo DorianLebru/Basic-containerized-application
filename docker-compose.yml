@@ -2,16 +2,14 @@ version: "3"
 
 services:
   db:
-    build:
-      context: .
-      dockerfile: database/Dockerfile
+    build: ./database
     ports:
       - "5000:5000"
     environment:
       MYSQL_DATABASE: mydb
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: mypassword
-      MYSQL_ROOT_PASSWORD: myrootpassword
+      MYSQL_USER: ${{ secrets.MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
 
       TZ: Europe/Paris
     volumes:
@@ -25,8 +23,8 @@ services:
       MYSQL_HOST: db
       MYSQL_DATABASE: mydb
       MYSQL_PORT: 3306
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: mypassword
+      MYSQL_USER: ${{ secrets.MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
 
 volumes:
   mysql-data:
