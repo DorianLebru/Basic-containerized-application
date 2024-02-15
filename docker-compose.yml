@@ -5,8 +5,11 @@ services:
     build: ./database
     ports:
       - "5000:5000"
-    env_file:
-      - .secrets.env
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: ${{ MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ MYSQL_PASSWORD }}
+      MYSQL_ROOT_PASSWORD: ${{ MYSQL_ROOT_PASSWORD }}
 
       TZ: Europe/Paris
     volumes:
@@ -16,8 +19,12 @@ services:
     build: ./webserver
     ports:
       - "8080:8080"
-    env_file:
-      - ./secrets.env
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: mydb
+      MYSQL_PORT: 3306
+      MYSQL_USER: ${{ MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ MYSQL_PASSWORD }}
 
 volumes:
   mysql-data:
